@@ -14,10 +14,10 @@ const routes = [
   },
   {
     path: "/conversor-neodata",
-    name: "ConversorNeodata",
-    component: () => import("@/renderer/views/ConversorNeodata.vue"),
+    name: "Neodatac",
+    component: () => import("@/renderer/views/Neodatac.vue"),
     meta: {
-      title: "Conversor",
+      title: "Catalogo Neodata",
     },
   },
 ];
