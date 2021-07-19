@@ -9,8 +9,13 @@
         </v-list-item>
       </v-list>
       <v-divider></v-divider>
-      <v-col>
-        <card-archivo></card-archivo>
+      <v-col class="mb-5">
+        <card-archivo
+          v-for="(file, i) in files_converted"
+          :key="i"
+          :file="file"
+          @delete="removeFileSave"
+        ></card-archivo>
       </v-col>
     </v-sheet>
     <div id="page-content">
@@ -39,14 +44,25 @@
 
           <v-col cols="6" v-for="(file, i) in files_selected" :key="i">
             <v-card max-width="344" outlined>
-              <div class="d-flex flex-no-wrap justify-space-between">
-                <v-avatar class="ma-3" size="60" tile>
-                  <v-img src="@/renderer/assets/icons/excel.png"></v-img>
-                </v-avatar>
-                <v-card-title
-                  class="text-body-2"
-                  v-text="file.name"
-                ></v-card-title>
+              <div class="d-flex">
+                <div class="flex-grow-0">
+                  <v-avatar class="ma-3" size="60" tile>
+                    <v-img src="@/renderer/assets/icons/excel.png"></v-img>
+                  </v-avatar>
+                </div>
+                <div class="flex-grow-1">
+                  <v-card-title
+                    class="text-body-2"
+                    v-text="file.name"
+                  ></v-card-title>
+                  <v-card-subtitle
+                    :class="{
+                      'error--text': file.status == 'ERROR',
+                      'success--text': file.status == 'FINISH',
+                    }"
+                    >{{ file.message }}</v-card-subtitle
+                  >
+                </div>
               </div>
 
               <v-card-actions>
@@ -54,7 +70,13 @@
                 <v-btn outlined text color="error" @click="removeFile(i)">
                   Eliminar
                 </v-btn>
-                <v-btn outlined text color="primary" @click="convertir(file)">
+                <v-btn
+                  v-if="file.status != 'FINISH'"
+                  outlined
+                  text
+                  color="primary"
+                  @click="convertir(file)"
+                >
                   Convertir
                 </v-btn>
               </v-card-actions>
@@ -93,7 +115,7 @@
 
 <script>
 import DialogInfo from "@/renderer/components/shared/DialogInfo.vue";
-import CardArchivo from "@/renderer/components/conversor-sade/CardArchivo.vue";
+import CardArchivo from "@/renderer/components/shared/CardArchivo.vue";
 const dragDrop = require("drag-drop");
 
 export default {
@@ -104,8 +126,8 @@ export default {
   data: () => ({
     loading: false,
     overDropzone: false,
-    files_selected: [],
     acceptFiles: ["xlsx", "xls"],
+    files_selected: [],
     no_accepts: [],
     status: {
       start: "START",
@@ -113,9 +135,12 @@ export default {
       error: "ERROR",
       finish: "FINISH",
     },
+    files_converted: [],
   }),
 
   mounted() {
+    this.removeFromFolder();
+    this.getFiles();
     dragDrop("#uploader", {
       onDrop: (files) => {
         this.addFiles(files);
@@ -128,6 +153,7 @@ export default {
       },
     });
   },
+  created() {},
   methods: {
     addFiles(files) {
       const _files = files.map((file) => {
@@ -136,6 +162,7 @@ export default {
           name: file.name,
           path: file.path,
           type,
+          message: "",
           status: this.status.start,
         };
       });
@@ -159,18 +186,39 @@ export default {
       const filesList = event.target.files;
       const files = Array.from(filesList);
       this.addFiles(files);
+      this.$refs.select_file.value = null;
+    },
+    removeFileSave(filename) {
+      this.files_converted = this.files_converted.filter(
+        (file) => file.name != filename
+      );
     },
     removeFile(i) {
       this.files_selected.splice(i, 1);
     },
     convertir(file) {
-      file.status = this.status.inProccess;
-      // window.ipcRenderer.invoke("app:on-fs-dialog-open").then(() => {
-      //   console.log("Se eligio un dato");
-      //   // ipcRenderer.invoke("app:get-files").then((files = []) => {
-      //   //   dom.displayFiles(files);
-      //   // });
-      // });
+      // file.status = this.status.inProccess;
+      window.ipcRenderer.invoke("app:on-file-convert", file).then((res) => {
+        const _res = JSON.parse(res);
+        file.status = _res.status;
+        file.message = _res.message;
+        if (_res.success) {
+          this.getFiles();
+        }
+      });
+    },
+    getFiles() {
+      window.ipcRenderer.invoke("app:get-files").then((res) => {
+        const _res = JSON.parse(res);
+        if (_res.success) {
+          this.files_converted = _res.files;
+        }
+      });
+    },
+    removeFromFolder() {
+      window.ipcRenderer.on("app:delete-file", (event, filename) => {
+        this.removeFileSave(filename);
+      });
     },
   },
   computed: {},

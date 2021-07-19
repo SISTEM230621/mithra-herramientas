@@ -1,12 +1,12 @@
 "use strict";
 
-import { app, protocol, BrowserWindow, ipcMain } from "electron";
+import { app, protocol, BrowserWindow, ipcMain, remote } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 // import store from "../renderer/store";
-import IpcRegister from './IpcRegister';
+import { IpcRegister, watchFiles } from './IpcRegister';
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -16,7 +16,7 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 900,
+    width: 1100,
     height: 600,
     resizable: false,
     webPreferences: {
@@ -29,6 +29,10 @@ async function createWindow() {
     },
   });
 
+  win.setMenuBarVisibility(false)
+
+  watchFiles(win.webContents)
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
@@ -38,6 +42,7 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL("app://./index.html");
   }
+ 
 }
 
 // Quit when all windows are closed.
@@ -71,10 +76,11 @@ app.on("ready", async () => {
   ipcRegister.registerOn()
   createWindow();
 
+
   // setInterval(() => {
-    // console.log(s|tore.getters['neodataC/getLoading']);
-    // value = !value;|
-    // store.dispatch("|neodataC/setLoading", value)
+  // console.log(s|tore.getters['neodataC/getLoading']);
+  // value = !value;|
+  // store.dispatch("|neodataC/setLoading", value)
   // }, 5000)|
 });
 
