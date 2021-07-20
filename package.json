@@ -2,8 +2,16 @@
   "name": "mithra-conversor",
   "version": "0.1.0",
   "private": true,
-  "description": "hola mundo",
-  "author": "rebolledo",
+  "description": "Herramienta para la conversion de catalogos",
+  "author": {
+    "name": "Rafael De Jesus Rebolledo Hernandez",
+    "email": "rrrrebolledohdz@gmai.com"
+  },
+  "repository": {
+    "url": "https://estimacionesmitra.com",
+    "type": "git"
+  },
+  "homepage": "https://estimacionesmitra.com",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

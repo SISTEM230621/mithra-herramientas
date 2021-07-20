@@ -8,16 +8,26 @@ module.exports = {
         'src/main/background.js'
       ],
       outputDir: "mithra-build",
+      builderOptions: {
+        appId: "com.mithra.app",
+        productName: "herramientas",
+        win: {
+          target: "nsis",
+          icon: "public/electron.ico",
+          // oneClick: true
+        },
+        mac: {
+          target: "dmg",
+          category: "public.app-category.utilities"
+        },
+        linux: {
+          target: "AppImage",
+          category: "Utility"
+        }
+        // options placed here will be merged with default configuration and passed to electron-builder
+      }
 
-      // appId: "com.mithra.app",
-      // productName: "herramientas",
-      // directory: {
-      //   "output": "build"
-      // },
-      // nsis: {
-      //   "allowToChangeInstallationDirectory": true,
-      //   "oneClick": false
-      // }
+
     }
   },
   pages: {
