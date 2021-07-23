@@ -3,6 +3,7 @@
 import { app, protocol, BrowserWindow, ipcMain, remote } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
+import { autoUpdater } from "electron-updater"
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 // import store from "../renderer/store";
@@ -39,10 +40,10 @@ async function createWindow() {
     if (!process.env.IS_TEST) win.webContents.openDevTools();
   } else {
     createProtocol("app");
-    // Load the index.html when not in development
     win.loadURL("app://./index.html");
+    autoUpdater.checkForUpdatesAndNotify()
   }
- 
+
 }
 
 // Quit when all windows are closed.

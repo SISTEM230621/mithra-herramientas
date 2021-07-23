@@ -2,6 +2,7 @@ module.exports = {
   transpileDependencies: ["vuetify"],
   pluginOptions: {
     electronBuilder: {
+      publish: ['github'],
       nodeIntegration: true,
       mainProcessFile: 'src/main/background.js',
       mainProcessWatch: [
