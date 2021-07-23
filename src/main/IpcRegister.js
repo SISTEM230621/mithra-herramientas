@@ -1,4 +1,4 @@
-
+const { dialog } = require('electron');
 const fs = require('fs-extra');
 const ExcelJS = require('exceljs');
 const XLSX = require('xlsx');
@@ -6,11 +6,8 @@ const os = require('os');
 const path = require('path');
 const dirNeodataC = path.resolve(os.homedir(), 'mithraH/neodatac');
 const open = require('open');
-var chokidar = require("chokidar");
-
-
-// const { dialog } = require('electron');
-
+const notification = require( './notification' );
+const chokidar = require("chokidar");
 
 
 class IpcRegister {
@@ -43,6 +40,9 @@ class IpcRegister {
 
         this.ipcMain.on('app:on-file-open', (event, file) => {
             this.openFile(file.path);
+        });
+        this.ipcMain.on('app:on-file-move', (event, file) => {
+            this.moveFile(file);
         });
     }
 
@@ -84,7 +84,6 @@ class IpcRegister {
         }
     }
     convertir(file) {
-
         return new Promise(async (resolve, reject) => {
 
             var buf = fs.readFileSync(file.path);
@@ -238,12 +237,9 @@ class IpcRegister {
 
 
         });
-
     }
     getFiles() {
-
         return new Promise((resolve, reject) => {
-
             const files = fs.readdirSync(dirNeodataC);
             let _files = files.map(filename => {
                 const filePath = path.resolve(dirNeodataC, filename);
@@ -265,7 +261,6 @@ class IpcRegister {
     }
     deleteFile(filepath) {
         const _filePath = path.resolve(dirNeodataC, filepath);
-
         if (fs.existsSync(_filePath)) {
             fs.removeSync(_filePath);
         }
@@ -274,6 +269,22 @@ class IpcRegister {
         const _filePath = path.resolve(dirNeodataC, filepath);
         if (fs.existsSync(_filePath)) {
             open(_filePath);
+        }
+    }
+    moveFile(file) {
+        const directory = dialog.showOpenDialogSync({
+            properties: ['openDirectory'],
+        });
+
+        if (directory != undefined) {
+
+            const src = path.resolve(dirNeodataC, file.path);
+            const ori = path.resolve(directory[0], file.filename);
+
+            if (fs.existsSync(src)) {
+                fs.copyFileSync(src, ori);
+                notification.show('Archivo descargado', `El archivo esta disponible en ${ori}`);
+            }
         }
     }
 
