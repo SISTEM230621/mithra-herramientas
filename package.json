@@ -8,10 +8,10 @@
     "email": "rrrrebolledohdz@gmai.com"
   },
   "repository": {
-    "url": "https://estimacionesmitra.com",
+    "url": "https://github.com/SISTEM230621/mithra-herramientas.git",
     "type": "git"
   },
-  "homepage": "https://estimacionesmitra.com",
+  "homepage": "https://github.com/SISTEM230621/mithra-herramientas",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

@@ -2,7 +2,6 @@ module.exports = {
   transpileDependencies: ["vuetify"],
   pluginOptions: {
     electronBuilder: {
-      publish: ['github'],
       nodeIntegration: true,
       mainProcessFile: 'src/main/background.js',
       mainProcessWatch: [
@@ -10,22 +9,29 @@ module.exports = {
       ],
       outputDir: "mithra-build",
       builderOptions: {
+
         appId: "com.mithra.app",
         productName: "herramientas",
-        win: {
-          target: "nsis",
-          icon: "public/electron.ico",
-          // oneClick: true
-        },
-        mac: {
-          target: "dmg",
-          category: "public.app-category.utilities"
-        },
-        linux: {
-          target: "AppImage",
-          category: "Utility"
-        }
-        // options placed here will be merged with default configuration and passed to electron-builder
+        publish: ['github'
+          // {
+          //   "provider": "github",
+          //   "owner": "sistem.gpr@gmail.com",
+          //   "repo": "https://github.com/SISTEM230621/mithra-herramientas.git",
+          //   "token": "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"
+          // }
+        ],
+        // win: {
+        //   target: "nsis",
+        //   icon: "public/electron.ico",
+        // },
+        /*  mac: {
+           target: "dmg",
+           category: "public.app-category.utilities"
+         },
+         linux: {
+           target: "AppImage",
+           category: "Utility"
+         } */
       }
 
 

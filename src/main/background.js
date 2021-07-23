@@ -38,6 +38,7 @@ async function createWindow() {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
     if (!process.env.IS_TEST) win.webContents.openDevTools();
+    
   } else {
     createProtocol("app");
     win.loadURL("app://./index.html");
