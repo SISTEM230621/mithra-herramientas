@@ -9,21 +9,13 @@ module.exports = {
       ],
       outputDir: "mithra-build",
       builderOptions: {
-
         appId: "com.mithra.app",
         productName: "herramientas",
-        publish: ['github'
-          // {
-          //   "provider": "github",
-          //   "owner": "sistem.gpr@gmail.com",
-          //   "repo": "https://github.com/SISTEM230621/mithra-herramientas.git",
-          //   "token": "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"
-          // }
-        ],
-        // win: {
-        //   target: "nsis",
-        //   icon: "public/electron.ico",
-        // },
+        publish: ['github'],
+        win: {
+          target: "nsis",
+          icon: "public/electron.ico",
+        },
         /*  mac: {
            target: "dmg",
            category: "public.app-category.utilities"
