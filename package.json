@@ -1,11 +1,11 @@
 {
-  "name": "mithra-conversor",
+  "name": "mithra_herramientas",
   "version": "1.0.1",
   "private": true,
   "description": "Herramienta para la conversion de catalogos",
   "author": {
-    "name": "Rafael De Jesus Rebolledo Hernandez",
-    "email": "rrrrebolledohdz@gmai.com"
+    "name": "SISTEM",
+    "email": "sistem.gpr@gmai.com"
   },
   "repository": {
     "url": "https://github.com/SISTEM230621/mithra-herramientas.git",

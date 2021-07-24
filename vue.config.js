@@ -10,7 +10,7 @@ module.exports = {
       outputDir: "mithra-build",
       builderOptions: {
         appId: "com.mithra.app",
-        productName: "herramientas",
+        productName: "Mithra herramientas",
         publish: ['github'],
         win: {
           target: "nsis",
