@@ -1,24 +1,9 @@
-# mithra-conversor
+# Mitra Herramientas
 
-## Project setup
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+Mithra herramientas es un software que te ayudara a convertir los catalogos de las distintas plataformas de precios unitarios como lo son NEODATA, OPUS etc.
 ```
 
-### Compiles and minifies for production
 ```
-npm run build
+Esta aplicación es creado con electronjs y vue-cli
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
