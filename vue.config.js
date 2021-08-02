@@ -18,7 +18,7 @@ module.exports = {
         },
         linux: {
           target: "deb",
-          icon: "src/icons/png/1024x1024.png",
+          icon: "src/icons/png/",
           category: "Utility"
         },
         mac: {
