@@ -14,20 +14,19 @@ module.exports = {
         publish: ['github'],
         win: {
           target: "nsis",
-          icon: "public/electron.ico",
+          icon: "src/icons/win/icon.ico",
         },
         linux: {
           target: "deb",
+          icon: "src/icons/png/1024x1024.png",
           category: "Utility"
-        }
-        /*  mac: {
-           target: "dmg",
-           category: "public.app-category.utilities"
-         },
-         linux: {
-           target: "AppImage",
-           category: "Utility"
-         } */
+        },
+        mac: {
+          target: "dmg",
+          category: "public.app-category.utilities",
+          icon: "src/icons/mac/icon.icns"
+        },
+
       }
 
 

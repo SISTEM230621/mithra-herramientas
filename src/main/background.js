@@ -28,6 +28,7 @@ async function createWindow() {
       webSecurity: false,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
     },
+    
   });
 
   win.setMenuBarVisibility(false)
