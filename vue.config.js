@@ -16,6 +16,10 @@ module.exports = {
           target: "nsis",
           icon: "public/electron.ico",
         },
+        linux: {
+          target: "deb",
+          category: "Utility"
+        }
         /*  mac: {
            target: "dmg",
            category: "public.app-category.utilities"
