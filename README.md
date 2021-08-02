@@ -6,4 +6,7 @@ Mithra herramientas es un software que te ayudara a convertir los catalogos de l
 
 ```
 Esta aplicación es creado con electronjs y vue-cli
+
+-create env.production
+-verify $env:GH_TOKEN
 ```
