@@ -5,6 +5,7 @@ import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 import { autoUpdater } from "electron-updater"
 const isDevelopment = process.env.NODE_ENV !== "production";
+import path from 'path'
 
 // import store from "../renderer/store";
 import { IpcRegister, watchFiles } from './IpcRegister';
@@ -28,7 +29,7 @@ async function createWindow() {
       webSecurity: false,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
     },
-    
+    icon: path.join(__static, 'icon.png')    
   });
 
   win.setMenuBarVisibility(false)

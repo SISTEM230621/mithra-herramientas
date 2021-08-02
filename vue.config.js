@@ -14,17 +14,14 @@ module.exports = {
         publish: ['github'],
         win: {
           target: "nsis",
-          icon: "src/icons/win/icon.ico",
         },
         linux: {
           target: "deb",
-          icon: "src/icons/png/",
           category: "Utility"
         },
         mac: {
           target: "dmg",
           category: "public.app-category.utilities",
-          icon: "src/icons/mac/icon.icns"
         },
 
       }
@@ -37,7 +34,7 @@ module.exports = {
       entry: "src/renderer/main.js",
       template: "public/index.html",
       filename: "index.html",
-      title: "Mithra",
+      title: "Mithra herramientas",
       chunks: ["chunk-vendors", "chunk-common", "index"],
     },
   },

@@ -73,7 +73,7 @@ export default {
     "$route.meta": {
       handler: function (meta) {
         const title =
-          meta.title === undefined ? "Herramientas Mithra" : meta.title;
+          meta.title === undefined ? "Mithra Herramientas" : meta.title;
         this.title = title;
       },
       deep: true,
