@@ -6,7 +6,7 @@ const os = require('os');
 const path = require('path');
 const dirNeodataC = path.resolve(os.homedir(), 'mithraH/neodatac');
 const open = require('open');
-const notification = require( './notification' );
+const notification = require('./notification');
 const chokidar = require("chokidar");
 
 
@@ -48,6 +48,7 @@ class IpcRegister {
 
 
     ESTOTAL(todo) {
+
         if (!todo) {
             return "NINGUNO";
         }
@@ -59,7 +60,8 @@ class IpcRegister {
         let p_unitario = Object.prototype.hasOwnProperty.call(todo, "p_unitario");
         let importe = Object.prototype.hasOwnProperty.call(todo, "importe");
 
-        if (codigo && importe) {
+
+        if ((codigo && importe) || (concepto && todo.cantidad == 0 && todo.p_unitario == 0 && todo.importe == 0)) {
             return "CONCEPTO";
         }
 
@@ -83,6 +85,8 @@ class IpcRegister {
             return "TOTAL";
         }
     }
+
+
     convertir(file) {
         return new Promise(async (resolve, reject) => {
 
@@ -115,11 +119,13 @@ class IpcRegister {
             let pg4 = "";
             let seleccionado = "pg";
             let inicia_union_concepto = false;
+            let agregar = false;
             let nuevo_concepto = null;
-
+            xls.shift();
             xls.forEach((todo, i) => {
                 try {
                     const RESP = this.ESTOTAL(todo);
+
                     if (RESP == "PARTIDA") {
                         switch (seleccionado) {
                             case "pg":
@@ -137,7 +143,6 @@ class IpcRegister {
                             case "pg4":
                                 pg4 = todo.concepto
                                 seleccionado = "pg";
-
                                 break;
                         }
                     }
@@ -151,6 +156,7 @@ class IpcRegister {
                         );
 
                         if (inicia_union_concepto) {
+
                             let concepto_aux = Object.prototype.hasOwnProperty.call(
                                 todo,
                                 "concepto"
@@ -168,6 +174,7 @@ class IpcRegister {
                                 "p_unitario"
                             );
 
+
                             if (
                                 concepto_aux &&
                                 cantidad_aux &&
@@ -176,27 +183,35 @@ class IpcRegister {
                                 !codigo
                             ) {
                                 nuevo_concepto.concepto += todo.concepto;
+                                if (this.ESTOTAL(xls[i + 1]) != "CONCEPTO")
+                                    agregar = true;
                             } else {
+                                agregar = true;
+                            }
+
+                            if (agregar) {
                                 sheet.addRow([
                                     pg,
                                     pg2 == "" ? undefined : pg2,
                                     pg3 == "" ? undefined : pg3,
                                     pg4 == "" ? undefined : pg4,
-                                    todo.codigo,
-                                    todo.concepto,
-                                    todo.unidad,
-                                    todo.cantidad,
-                                    todo.p_unitario,
-                                    todo.importe,
+                                    nuevo_concepto.codigo,
+                                    nuevo_concepto.concepto,
+                                    nuevo_concepto.unidad,
+                                    nuevo_concepto.cantidad,
+                                    nuevo_concepto.p_unitario,
+                                    nuevo_concepto.importe,
                                 ]);
 
                                 inicia_union_concepto = false;
                                 nuevo_concepto = null;
                             }
+
                         }
 
                         if (codigo && importe && !inicia_union_concepto) {
                             inicia_union_concepto = true;
+                            agregar = false;
                             nuevo_concepto = todo;
                         }
 
@@ -292,6 +307,7 @@ class IpcRegister {
 }
 
 const watchFiles = (webContents) => {
+    fs.ensureDirSync(dirNeodataC);
     chokidar.watch(dirNeodataC).on('unlink', (filepath) => {
         webContents.send('app:delete-file', path.parse(filepath).base);
     });
