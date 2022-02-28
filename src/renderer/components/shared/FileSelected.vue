@@ -34,7 +34,7 @@
         v-if="file.status != 'FINISH'"
         outlined
         text
-        color="primary"
+        color="pantone"
         @click="$emit('convertir', file)"
         :loading="file.status == 'PROCCESS'"
         :disabled="file.status == 'PROCCESS'"

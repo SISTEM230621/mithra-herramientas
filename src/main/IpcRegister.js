@@ -126,6 +126,7 @@ class IpcRegister {
                 try {
                     const RESP = this.ESTOTAL(todo);
 
+
                     if (RESP == "PARTIDA") {
                         switch (seleccionado) {
                             case "pg":
@@ -154,6 +155,7 @@ class IpcRegister {
                             todo,
                             "importe"
                         );
+
 
                         if (inicia_union_concepto) {
 
@@ -209,17 +211,37 @@ class IpcRegister {
 
                         }
 
+
                         if (codigo && importe && !inicia_union_concepto) {
                             inicia_union_concepto = true;
                             agregar = false;
                             nuevo_concepto = todo;
                         }
 
-
-
                     }
 
+
+
                     if (RESP == "TOTAL") {
+                        if (nuevo_concepto !== null) {
+                            sheet.addRow([
+                                pg,
+                                pg2 == "" ? undefined : pg2,
+                                pg3 == "" ? undefined : pg3,
+                                pg4 == "" ? undefined : pg4,
+                                nuevo_concepto.codigo,
+                                nuevo_concepto.concepto,
+                                nuevo_concepto.unidad,
+                                nuevo_concepto.cantidad,
+                                nuevo_concepto.p_unitario,
+                                nuevo_concepto.importe,
+                            ]);
+
+                            inicia_union_concepto = false;
+                            nuevo_concepto = null;
+                            agregar = false;
+                        }
+
 
                         if (pg != "" && pg2 != "" && pg3 != "" && pg4 != "") {
                             pg4 = ""
@@ -234,8 +256,6 @@ class IpcRegister {
                             pg = ""
                             seleccionado = "pg"
                         }
-
-
                     }
 
 
@@ -253,6 +273,8 @@ class IpcRegister {
 
         });
     }
+
+
     getFiles() {
         return new Promise((resolve, reject) => {
             const files = fs.readdirSync(dirNeodataC);

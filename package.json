@@ -1,8 +1,8 @@
 {
   "name": "mithra_herramientas",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
-  "description": "Herramienta para la conversion de catalogos",
+  "description": "Herramienta para la conversión de catalogos",
   "author": {
     "name": "SISTEM",
     "email": "sistem.gpr@gmai.com"

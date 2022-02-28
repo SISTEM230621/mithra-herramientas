@@ -1,13 +1,13 @@
 <template>
   <v-card hover>
-    <v-card-title class="text-h6 font-weight-bold error--text">
+    <v-card-title class="text-h6 font-weight-bold dark--text">
       {{ menu.title }}
     </v-card-title>
     <v-card-subtitle>{{ menu.description }}</v-card-subtitle>
 
     <v-card-actions>
       <v-btn
-        color="primary"
+        color="pantone"
         @click="ir"
         class="ml-2 mt-5"
         outlined

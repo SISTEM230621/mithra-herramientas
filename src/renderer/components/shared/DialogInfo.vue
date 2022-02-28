@@ -7,7 +7,7 @@
         <v-card-actions>
           <slot name="actions">
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="hideDialog"> Aceptar </v-btn>
+            <v-btn color="pantone" text @click="hideDialog"> Aceptar </v-btn>
           </slot>
         </v-card-actions>
       </v-card>

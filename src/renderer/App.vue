@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dense color="primary" dark clipped-right flat height="50">
+    <v-app-bar app dense color="dark" dark clipped-right flat height="50">
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-app-bar>
@@ -23,7 +23,7 @@
       <v-divider></v-divider>
 
       <v-list dense nav>
-        <v-list-item-group v-model="selectedItem" color="primary">
+        <v-list-item-group v-model="selectedItem" color="pantone">
           <v-list-item
             v-for="(m, i) in menu"
             :key="i"
